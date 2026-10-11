@@ -32,3 +32,10 @@ Decompression is strict: a bare digit that is not part of an escaped run or a va
 `decompress(text: str) -> str` — decompress a string; raises `CompressionError` on malformed input.
 
 `CompressionError` — subclass of `ValueError`, raised by `decompress`.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
